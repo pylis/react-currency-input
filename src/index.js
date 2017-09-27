@@ -47,6 +47,7 @@ class CurrencyInput extends Component {
         delete customProps.allowEmpty;
         delete customProps.prefix;
         delete customProps.suffix;
+        delete customProps.autoFocus;
 
         let initialValue = props.value;
         if (initialValue === null) {
@@ -116,11 +117,14 @@ class CurrencyInput extends Component {
     componentDidMount(){
         let node = ReactDOM.findDOMNode(this.theInput);
 
+        if (this.props.autoFocus) {
+            this.theInput.focus();
+        }
+
         let selectionEnd = Math.min(node.selectionEnd, this.theInput.value.length - this.props.suffix.length);
         let selectionStart = Math.min(node.selectionStart, selectionEnd);
         //console.log("normal", selectionStart, selectionEnd);
         node.setSelectionRange(selectionStart, selectionEnd);
-
     }
 
 
@@ -273,7 +277,8 @@ CurrencyInput.defaultProps = {
     inputType: 'text',
     allowNegative: false,
     prefix: '',
-    suffix: ''
+    suffix: '',
+    autoFocus: false
 };
 
 
